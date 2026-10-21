@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tessera Rule Tests</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<main class="gutter py-16 md:py-24">
+  <div class="wrap max-w-4xl">
+    <a href="index.html" class="flex items-center gap-3 mb-14">
+      <img src="assets/logo.svg" alt="" width="32" height="32"><span class="wordmark">Tessera</span>
+    </a>
+    <p class="eyebrow mb-4">Automated testing</p>
+    <h1 class="section-title">Rule tests</h1>
+    <p class="mt-6 text-mute max-w-[56ch]">Each test checks one rule or behaviour of the rule engine in <code class="font-mono text-bone">js/rules.js</code>. Refresh this page after changing a rule.</p>
+    <div id="summary" class="mt-10 flex flex-wrap items-center gap-4"></div>
+    <div class="table-wrap mt-8">
+      <table class="rules-table" style="min-width:560px">
+        <thead><tr><th scope="col">ID</th><th scope="col">What it checks</th><th scope="col">Result</th></tr></thead>
+        <tbody id="results"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<script src="js/rules.js"></script>
+<script src="js/tests.js"></script>
+<script>
+  (function () {
+    var r = window.TesseraTestResults;
+    var ok = r.passed === r.total;
+    document.getElementById('summary').innerHTML =
+      '<span class="pill ' + (ok ? 'pill-y' : 'pill-wait') + '">' + (ok ? 'All passing' : 'Failures') + '</span>' +
+      '<span class="font-display font-extrabold text-3xl tracking-tight">' + r.passed + ' of ' + r.total + ' passed</span>';
+    document.getElementById('results').innerHTML = r.results.map(function (t) {
+      return '<tr><td class="rid">' + t.id + '</td><td>' + t.name +
+        (t.error ? '<br><span class="text-signal text-sm">' + t.error + '</span>' : '') + '</td>' +
+        '<td><span class="pill ' + (t.pass ? 'pill-y' : 'pill-wait') + '">' + (t.pass ? 'Pass' : 'Fail') + '</span></td></tr>';
+    }).join('');
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tessera</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Tessera tells you which documents your application needs, why each one applies, and how close you are to ready.">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/styles.css">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<a href="#app" class="skip" data-go>Skip to the app</a>
+
+<!-- Intro curtain: wipes away on load -->
+<div class="curtain" id="curtain" aria-hidden="true">
+  <svg class="curtain-mark" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#0A0A0A"/><rect class="ct" x="7" y="7" width="8" height="8" rx="1.8" fill="#FFD000" fill-opacity=".22"/><rect class="ct" x="17" y="7" width="8" height="8" rx="1.8" fill="#FFD000" fill-opacity=".46"/><rect class="ct" x="7" y="17" width="8" height="8" rx="1.8" fill="#FFD000" fill-opacity=".72"/><rect class="ct" x="17" y="17" width="8" height="8" rx="1.8" fill="#FFD000"/></svg>
+</div>
+
+<!-- Section wipe used when jumping between sections -->
+<div class="wipe" id="wipe" aria-hidden="true"><span class="wipe-label" id="wipeLabel"></span></div>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"><span class="cursor-label" id="cursorLabel"></span></div>
+
+<!-- Navigation -->
+<header class="nav" id="nav">
+  <div class="gutter">
+    <div class="wrap flex items-center justify-between h-16 md:h-20">
+      <a href="#top" data-go data-label="Tessera" class="flex items-center gap-3" aria-label="Tessera, back to top">
+        <svg class="w-8 h-8" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#FFD000"/><rect x="7" y="7" width="8" height="8" rx="1.8" fill="#0A0A0A" fill-opacity=".22"/><rect x="17" y="7" width="8" height="8" rx="1.8" fill="#0A0A0A" fill-opacity=".46"/><rect x="7" y="17" width="8" height="8" rx="1.8" fill="#0A0A0A" fill-opacity=".72"/><rect x="17" y="17" width="8" height="8" rx="1.8" fill="#0A0A0A"/><path d="M18.9 21.2l1.6 1.6 2.9-3.2" fill="none" stroke="#FFD000" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="wordmark">Tessera</span>
+      </a>
+      <nav class="hidden md:flex items-center text-[15px]" aria-label="Sections">
+        <a href="#why" data-go class="nav-link">Why</a>
+        <a href="#how" data-go class="nav-link">How it works</a>
+        <a href="#rules" data-go class="nav-link">Rules</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <a href="#app" data-go data-magnetic data-cursor="Try" class="btn btn-y btn-sm"><span data-magnetic-inner>Try Tessera</span></a>
+        <button class="menu-btn md:hidden" id="menuBtn" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="menu gutter" id="menu" hidden>
+  <nav aria-label="Menu">
+    <a href="#why" data-go class="menu-link">Why</a>
+    <a href="#how" data-go class="menu-link">How it works</a>
+    <a href="#app" data-go class="menu-link">Try it</a>
+    <a href="#rules" data-go class="menu-link">Rules</a>
+  </nav>
+  <p class="font-mono text-xs uppercase tracking-[.14em]">Tessera · Research prototype</p>
+</div>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section id="top" class="relative gutter pt-28 md:pt-36 pb-10 md:pb-14 md:min-h-[100svh] flex flex-col">
+    <div class="wrap w-full flex flex-col flex-1">
+      <div class="flex items-center justify-between gap-4 eyebrow" data-hero-fade>
+        <span>Northgate University · Student support 2026/27</span>
+        <span class="hidden sm:inline">Research prototype · v2</span>
+      </div>
+
+      <h1 class="hero-title mt-10 md:mt-14" id="heroTitle">
+        <span class="line">From The Checklist</span>
+        <span class="line">To</span>
+        <span class="line">Clarity <span class="hl">No guessing</span></span>
+      </h1>
+
+      <div class="mt-auto pt-12 md:pt-14 grid gap-8 md:grid-cols-12 md:items-end">
+        <p class="md:col-span-5 text-lg md:text-xl leading-relaxed text-bone/80 max-w-[36ch]" data-hero-fade>
+          Tessera turns a long application checklist into a short list of documents, each with a plain-English reason.
+        </p>
+        <div class="md:col-span-5 flex flex-wrap gap-3" data-hero-fade>
+          <a href="#app" data-go data-magnetic data-cursor="Try" class="btn btn-y"><span data-magnetic-inner>Try the app <span class="arrow" aria-hidden="true">→</span></span></a>
+          <a href="#how" data-go data-magnetic class="btn btn-ghost"><span data-magnetic-inner>How it decides</span></a>
+        </div>
+        <div class="hidden md:flex md:col-span-2 justify-end items-end gap-4" data-hero-fade>
+          <span class="eyebrow">Scroll</span><span class="scroll-cue" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating document cards (decorative) -->
+    <div class="hero-cards hidden lg:block" id="heroCards" aria-hidden="true">
+      <div class="hero-card">
+        <div class="flex items-center justify-between"><span class="eyebrow">Finance</span><span class="rule-chip">R5</span></div>
+        <p class="mt-3 font-display font-bold text-[22px] tracking-tight">Bank statements</p>
+        <p class="mt-1 text-sm text-mute">Needed because you are requesting financial support.</p>
+        <div class="mt-4"><span class="pill pill-line">To do</span></div>
+      </div>
+      <div class="hero-card">
+        <div class="flex items-center justify-between"><span class="eyebrow">Finance</span><span class="rule-chip">R6</span></div>
+        <p class="mt-3 font-display font-bold text-[22px] tracking-tight">Household income declaration</p>
+        <div class="mt-4"><span class="pill pill-wait">Waiting for bank statements</span></div>
+      </div>
+      <div class="hero-card">
+        <div class="flex items-end justify-between gap-4">
+          <div><p class="font-mono text-[10px] uppercase tracking-[.14em] opacity-70">Readiness</p><p class="font-display font-extrabold text-6xl leading-none tracking-tighter mt-2">75%</p></div>
+          <p class="text-sm font-semibold text-right">6 of 8<br>documents ready</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <section class="relative py-10 md:py-16 overflow-hidden" aria-label="Documents Tessera covers">
+    <div class="marquee">
+      <div class="marquee-track" id="marquee">
+        <span class="marquee-item">Photo ID <i></i></span><span class="marquee-item">Offer letter <i></i></span><span class="marquee-item">eVisa <i></i></span><span class="marquee-item">English certificate <i></i></span><span class="marquee-item">Bank statements <i></i></span><span class="marquee-item">Income declaration <i></i></span><span class="marquee-item">Dependants <i></i></span><span class="marquee-item">Medical evidence <i></i></span><span class="marquee-item">Support statement <i></i></span><span class="marquee-item">Guardian consent <i></i></span><span class="marquee-item">Transcript <i></i></span>
+        <span class="marquee-item" aria-hidden="true">Photo ID <i></i></span><span class="marquee-item" aria-hidden="true">Offer letter <i></i></span><span class="marquee-item" aria-hidden="true">eVisa <i></i></span><span class="marquee-item" aria-hidden="true">English certificate <i></i></span><span class="marquee-item" aria-hidden="true">Bank statements <i></i></span><span class="marquee-item" aria-hidden="true">Income declaration <i></i></span><span class="marquee-item" aria-hidden="true">Dependants <i></i></span><span class="marquee-item" aria-hidden="true">Medical evidence <i></i></span><span class="marquee-item" aria-hidden="true">Support statement <i></i></span><span class="marquee-item" aria-hidden="true">Guardian consent <i></i></span><span class="marquee-item" aria-hidden="true">Transcript <i></i></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY ============ -->
+  <section id="why" class="gutter py-24 md:py-40">
+    <div class="wrap">
+      <p class="eyebrow mb-8" data-reveal>The problem</p>
+      <p class="scrub-text" id="scrubText">Most checklists list every document and explain none of them. Students guess, over-prepare, or miss the one document that blocks the rest. Tessera gives every document a <span class="text-signal">reason.</span></p>
+
+      <div class="problem-grid mt-20 md:mt-28" data-reveal>
+        <article class="problem">
+          <span class="problem-figure">11 → 4</span>
+          <div><h3>Long lists</h3><p>A support form lists every possible document. For most students, fewer than half apply.</p></div>
+        </article>
+        <article class="problem">
+          <span class="problem-figure">if A and B</span>
+          <div><h3>Hidden conditions</h3><p>Whether a document applies depends on your answers, but forms rarely say which ones.</p></div>
+        </article>
+        <article class="problem">
+          <span class="problem-figure">R5 → R6</span>
+          <div><h3>Blocked steps</h3><p>Some documents need another one first. Usually you only find out when you're stuck.</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS (pinned, horizontal on desktop) ============ -->
+  <section id="how" class="relative">
+    <div class="lg:min-h-[100svh] flex flex-col justify-center py-24 lg:py-16 overflow-hidden" id="howPin">
+      <div class="gutter">
+        <div class="wrap flex flex-wrap items-end justify-between gap-6 mb-10 md:mb-14">
+          <div>
+            <p class="eyebrow mb-5">How it works</p>
+            <h2 class="section-title" data-split>Four steps.<br>No guessing.</h2>
+          </div>
+          <p class="hidden lg:block eyebrow">Keep scrolling →</p>
+        </div>
+      </div>
+
+      <div class="how-track gutter" id="howTrack">
+        <article class="how-panel" data-reveal>
+          <div><span class="how-num">01</span></div>
+          <div class="how-visual">
+            <div class="mini-q"><span>Fee status</span><span class="seg seg-sm" aria-hidden="true"><label>Home</label><label style="background:#FFD000;color:#0A0A0A">International</label></span></div>
+            <div class="mini-q"><span>Financial support</span><span class="seg seg-sm" aria-hidden="true"><label style="background:#FFD000;color:#0A0A0A">Yes</label><label>No</label></span></div>
+          </div>
+          <div><h3>Answer six questions</h3><p>Fee status, support you need, dependants, age and earlier study. Nothing else.</p></div>
+        </article>
+
+        <article class="how-panel" data-reveal>
+          <div><span class="how-num">02</span></div>
+          <div class="how-visual">
+            <div class="mini-rule"><span>R5</span><span>Financial support = <b>Yes</b></span><span class="r-state text-signal">match</span></div>
+            <div class="mini-rule"><span>R3</span><span>Fee status = <b>International</b></span><span class="r-state text-signal">match</span></div>
+            <div class="mini-rule off"><span>R10</span><span>Under 18 = <b>Yes</b></span><span class="r-state">no match</span></div>
+          </div>
+          <div><h3>Eleven rules run</h3><p>Each document has one written rule. Tessera tests every rule against your answers.</p></div>
+        </article>
+
+        <article class="how-panel" data-reveal>
+          <div><span class="how-num">03</span></div>
+          <div class="how-visual">
+            <p class="font-semibold">Household income declaration</p>
+            <p class="text-sm text-mute">Needed because you are requesting financial support.</p>
+            <div><span class="pill pill-wait">Collect bank statements first</span></div>
+          </div>
+          <div><h3>Every document gets a reason</h3><p>You see why it applies, what it must show, and what has to come before it.</p></div>
+        </article>
+
+        <article class="how-panel" data-reveal>
+          <div><span class="how-num">04</span></div>
+          <div class="how-visual flex-row items-center gap-5">
+            <svg class="w-16 h-16 -rotate-90" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="16" fill="none" stroke="#1D1D1D" stroke-width="5"/><circle cx="20" cy="20" r="16" fill="none" stroke="#FFD000" stroke-width="5" stroke-linecap="round" stroke-dasharray="100.5" stroke-dashoffset="25"/></svg>
+            <div><p class="font-display font-extrabold text-3xl tracking-tight">75%</p><p class="text-sm text-mute">6 of 8 ready</p></div>
+          </div>
+          <div><h3>Watch readiness climb</h3><p>Tick what you have. Readiness is simply documents ready divided by documents needed.</p></div>
+        </article>
+      </div>
+
+      <div class="gutter mt-10 hidden lg:block"><div class="wrap relative h-px bg-line"><span class="how-progress" id="howProgress"></span></div></div>
+    </div>
+  </section>
+
+  <!-- ============ THE APP ============ -->
+  <section id="app" class="gutter py-24 md:py-36">
+    <div class="wrap">
+      <div class="flex flex-wrap items-end justify-between gap-6 mb-10 md:mb-14">
+        <div>
+          <p class="eyebrow mb-5">The app</p>
+          <h2 class="section-title" data-split>Try it.<br>Change an answer.</h2>
+        </div>
+        <p class="text-mute max-w-[40ch]" data-reveal>Every change re-runs the rules. Open any document to see exactly why it is on your list.</p>
+      </div>
+
+      <div class="app-shell wipe-in" id="appShell">
+        <div class="app-side">
+          <div class="flex items-center justify-between gap-3">
+            <p class="eyebrow">Your situation</p>
+            <span class="tag" id="sampleTag">Example profile</span>
+          </div>
+          <form id="qForm" class="mt-4" novalidate></form>
+          <div class="mt-6 pt-6 border-t border-line flex flex-wrap items-center gap-3">
+            <button class="btn btn-ghost btn-sm" type="button" id="blankBtn" data-focus="blank">Start from blank</button>
+          </div>
+        </div>
+
+        <div class="app-main">
+          <div class="readiness app-pad" aria-live="polite">
+            <div class="meter" id="meter">
+              <svg viewBox="0 0 120 120" aria-hidden="true">
+                <circle class="meter-track" cx="60" cy="60" r="54" stroke-width="9" fill="none"/>
+                <circle class="meter-bar" id="ringBar" cx="60" cy="60" r="54" stroke-width="9" fill="none" stroke-linecap="round" stroke-dasharray="339.29" stroke-dashoffset="339.29"/>
+              </svg>
+              <div class="meter-label"><span class="meter-pct"><span id="pct">0</span><small>%</small></span><span class="meter-cap">ready</span></div>
+            </div>
+            <div class="min-w-0">
+              <p class="eyebrow">Readiness</p>
+              <h3 class="headline" id="headline"></h3>
+              <p class="status" id="status"></p>
+              <dl class="tally">
+                <div class="t-ready"><dt>Ready</dt><dd id="tReady">0</dd></div>
+                <div><dt>To do</dt><dd id="tTodo">0</dd></div>
+                <div><dt>Waiting</dt><dd id="tWait">0</dd></div>
+              </dl>
+            </div>
+          </div>
+
+          <div class="next app-pad" id="next"></div>
+
+          <div class="app-pad">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
+              <h3 class="eyebrow">Your documents</h3>
+              <div class="seg seg-sm" role="radiogroup" aria-label="Show documents">
+                <input type="radio" name="filter" id="f-all" value="all" checked><label for="f-all">All</label>
+                <input type="radio" name="filter" id="f-todo" value="todo"><label for="f-todo">To do</label>
+                <input type="radio" name="filter" id="f-ready" value="ready"><label for="f-ready">Ready</label>
+              </div>
+            </div>
+            <ul class="docs" id="docList"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RULES ============ -->
+  <section id="rules" class="gutter py-24 md:py-36 border-t border-line">
+    <div class="wrap">
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-end mb-14">
+        <div class="lg:col-span-7">
+          <p class="eyebrow mb-5">Transparency</p>
+          <h2 class="section-title" data-split>Eleven rules.<br>Nothing hidden.</h2>
+        </div>
+        <dl class="lg:col-span-5 grid grid-cols-3 gap-6" data-reveal>
+          <div><dt class="eyebrow">Rules</dt><dd class="stat-num mt-3" data-count="11">11</dd></div>
+          <div><dt class="eyebrow">Questions</dt><dd class="stat-num mt-3" data-count="6">6</dd></div>
+          <div><dt class="eyebrow">Tests</dt><dd class="stat-num mt-3 text-signal" data-count="20">20</dd></div>
+        </dl>
+      </div>
+
+      <div class="table-wrap" data-reveal data-lenis-prevent>
+        <table class="rules-table">
+          <thead><tr><th scope="col">Rule</th><th scope="col">Document</th><th scope="col">Applies when</th><th scope="col">Collect first</th><th scope="col">For you</th></tr></thead>
+          <tbody id="ruleRows"></tbody>
+        </table>
+      </div>
+
+      <div class="mt-14 grid gap-6 lg:grid-cols-12 lg:items-end" data-reveal>
+        <p class="formula lg:col-span-8">Readiness = documents ready <span class="div">÷</span> documents that apply to you</p>
+        <p class="lg:col-span-4 text-mute">100% means you have everything on your list. Tessera never sees your documents, so the university still checks each one.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer wipe-up" id="start">
+  <div class="gutter pt-24 md:pt-36 pb-8">
+    <div class="wrap">
+      <p class="font-mono text-[11px] uppercase tracking-[.16em] opacity-70 mb-8">Ready when you are</p>
+      <h2 class="footer-title" data-split>Get ready.<br>Know why.</h2>
+      <div class="mt-12 md:mt-16 flex flex-wrap items-center gap-3">
+        <a href="#app" data-go data-magnetic data-cursor="Go" class="btn btn-ink"><span data-magnetic-inner>Open the app <span class="arrow" aria-hidden="true">→</span></span></a>
+        <a href="tests.html" class="btn btn-sm border border-ink/30 hover:border-ink">Run the rule tests</a>
+      </div>
+      <div class="mt-24 md:mt-36 pt-6 border-t border-ink/20 flex flex-col md:flex-row md:items-center justify-between gap-3 font-mono text-[11px] uppercase tracking-[.12em]">
+        <span>© 2026 Tessera · BSc Computer Science final-year project</span>
+        <span class="opacity-70">Fictional rules. No real documents are uploaded or stored.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Document detail drawer -->
+<div class="drawer-backdrop" id="drawerBackdrop" data-close hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
+  <div class="drawer-head" id="drawerHead"></div>
+  <div class="drawer-body" id="drawerBody" data-lenis-prevent></div>
+  <div class="drawer-foot" id="drawerFoot"></div>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- Animation libraries (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.8/dist/lenis.min.js"></script>
+
+<!-- Tessera -->
+<script src="js/rules.js"></script>
+<script src="js/app.js"></script>
+<script src="js/motion.js"></script>
+</body>
+</html>
